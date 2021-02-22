@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing : border-box;
+        }
+        html, body{
+            height:100%;
+            width:100%;
+        }
+        body{
+            display : flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .block{
+            display : flex;
+            align-items: center;
+            justify-content: center;
+            width : 500px;
+            height : 300px;
+            border-radius: 10px;
+            border: 1px solid black;
+            background-color: #f3f17a;
+        }
+        button {
+            padding:5px;
+            display : inline-block;
+            border-radius: 10px;
+            border: 1px solid black;
+            color: #000;
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="block">
+        <button type='button' onclick="handler()">Push</button>
+    </div>
+  <script src="test.js"></script>  
+  <script>
+      let bus = new EventBus();
+      let obj ={ 
+          name : 'steven',
+          Test(){
+            console.log(this, this.name);
+        }} ;
+      obj.Test = obj.Test.bind(obj);   
+      bus.on('test', obj.Test);
+      bus.on('test', ()=>{
+          console.log('second function')
+      })
+      function handler(){
+          console.log(bus)
+        bus.emit('test')
+      }
+  </script>
+</body>
+</html>
