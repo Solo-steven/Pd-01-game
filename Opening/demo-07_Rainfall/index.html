@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap');
+        *{
+            margin : 0px;
+            padding:0px;
+        }
+        body{
+            display : flex;
+            align-items:center;
+            justify-content:center;
+        }
+        .text{
+            color : #000;
+            font-size : 120px;
+            font-weight : 900;
+            font-family : 'Orbitron', sans-serif;
+            transition : all .4s;
+        }
+        .text-wrap{
+            position: absolute;
+            padding:2rem;
+            
+            background-color : transparent;
+            backdrop-filter: blur(10px);
+            /*sborder-radius:35px;*/
+            overflow:hidden;
+            transition : all .4s;
+        }
+        .text-wrap span{
+            position: absolute;
+            border-radius:35px;
+            background: linear-gradient(transparent ,rgba(64, 187, 218, 0.808));
+        }
+        .text-wrap span:nth-child(1), .text-wrap span:nth-child(3) {
+            min-height : 4px;
+            width : 110%;
+        }
+        .text-wrap span:nth-child(1){
+            top:  -1px;
+            left: -110%; 
+            transition : all .8s;
+        }
+        .text-wrap:hover span:nth-child(1){
+            top: -1px ;
+            left:110%;
+        }
+        .text-wrap span:nth-child(3){
+            bottom : -1px;
+            right: -110%;
+           transition : all .8s;
+           transition-delay: .8s;
+        }
+        .text-wrap:hover span:nth-child(3){
+            
+            bottom:-1px ;
+            right:110%;
+        }
+        .text-wrap span:nth-child(2), .text-wrap span:nth-child(4){
+            height:  100%;
+            min-width : 4px;
+        }
+        .text-wrap span:nth-child(2){
+            transition : all .8s; 
+            transition-delay:  .4s;
+            right : -1px;
+            top: -100%;
+        }
+        .text-wrap:hover span:nth-child(2){
+           
+            top: 100%;
+        }
+        .text-wrap span:nth-child(4){
+            transition : all .8s; 
+            transition-delay:  1.2s;
+            left : -1px;
+            bottom: -100%;
+        }
+        .text-wrap:hover span:nth-child(4){
+           
+            bottom: 100%;
+        }
+
+        .text-wrap:hover{
+            transition-delay: 1.6s;
+            background-color : rgba(64, 187, 218, 0.808);
+            box-shadow: 0px 0px  10px  rgba(64, 187, 218, 0.808) ,
+                        0px 0px  15px  rgba(64, 187, 218, 0.808) ,
+                        0px 0px  20px  rgba(64, 187, 218, 0.808) ;
+
+        }
+        .text-wrap:hover .text{
+            transition-delay: 1.6s;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="text-wrap">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <h1 class='text'>Pd-1 Game</h1>
+    </div>
+    <canvas id='canvas'></canvas>
+    <script src="vector.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
