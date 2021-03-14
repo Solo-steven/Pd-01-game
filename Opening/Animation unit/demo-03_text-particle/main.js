@@ -68,7 +68,6 @@ class Vector {
         this.setX(this.getX()*constant);
         this.setY(this.getY()*constant);
     }
-
 }
 
 
@@ -139,6 +138,9 @@ class TextAnimation{
         for(let i=0;i<this.text_Particle.length;++i){
             this.text_Particle[i].update();
         }
+        if(this.end()){
+            
+        }
         requestAnimationFrame(this.animate);
     }
     end(){
@@ -151,6 +153,9 @@ class TextAnimation{
         if(counter == this.text_Particle.length)
             return true;
         return false;    
+    }
+    destroy(){
+
     }
 }
 

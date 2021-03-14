@@ -13,7 +13,6 @@ class RainFallParticle{
     }
     draw(){
         this.ctx.beginPath();
-        //this.ctx.arc(this.position.x , this.position.y, this.radius, 0 , Math.PI * 2);
         this.ctx.fillStyle = this.color;
         let size = Math.floor(Math.random()*8 )+16;
         ctx.font = `${size}px serif`;
@@ -35,7 +34,44 @@ class RainFallParticle{
         this.draw();
     }
 }
+class RainFallAnimation{
+    constructor(canvas , ctx , number, rainColor , backgroundColor){
+        this.active = true;
+        this.canvas = canvas;
+        this.ctx = ctx ; 
+        this.number = number;
+        this.rainColor = rainColor;
+        this.backgroundColor = backgroundColor;
+        this.rainArray = []
+    }
+    init(){
+        for(let i =0 ;i<this.number; ++i){
+            let position = new Vector();
+            position.setPosition(window.innerWidth * Math.random(), Math.random()*window.innerHeight);
+            let velocity = new Vector();
+            velocity.setPosition(0 , 4 *Math.random()+5);
+            this.rainArray.push(new RainFallParticle(position, velocity, this.rainColor ,4, ctx))
+        }
+    }
+    animate(){
+        if(!this.active)
+            return;
+        this.ctx.fillStyle = this.backgroundColor;
+        this.ctx.fillRect(0,0,this.canvas.width , this.canvas.height);
+        this.rainArray.forEach(particle=>{
+            particle.update();
+        })
+    }
+    end(){
 
+    }
+    destroy(){
+        this.active = false;
+    }
+
+}
+
+/*
 const particle = [];
 const number =1000; 
 for(let i =0; i<number ;++i){
@@ -52,16 +88,21 @@ function animate(){
     particle.forEach(particle=>{
         particle.update();
     })
-    /*
-    ctx.fillStyle = 'rgba(0,0,0,1)';
-    ctx.font = '800 120px serif';
-    ctx.textAlign ='center';
-    ctx.fillText('Pd-1 Game', window.innerWidth/2, window.innerHeight/2);*/
     setTimeout(()=>{ requestAnimationFrame(animate)} , 30)
-    //requestAnimationFrame(animate)
 }
 ctx.fillStyle ='black';
 ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-requestAnimationFrame(animate)
+requestAnimationFrame(animate)*/
+
+let animate = new RainFallAnimation(canvas, ctx, 1000 ,'rgba(101, 206, 40, 0.808)' ,'rgba(0,0,0,.1)');
+animate.init();
+function animateManager(){
+    animate.animate();
+    setTimeout(()=>{ requestAnimationFrame(animateManager)},25);
+}
+
+requestAnimationFrame(animateManager)
+
+
 

@@ -1,8 +1,3 @@
-/**
- *  class 
- */
-
-
 class FadeRect{
     constructor(ctx, x, y, width , height , wait_time, fade_time ){
          this.ctx =ctx;
@@ -27,8 +22,8 @@ class FadeRect{
         else 
             this.colorStop =1;    
         const grid = ctx.createLinearGradient(0, this.y, 0 ,this.y + this.height);
-        grid.addColorStop(this.colorStop , 'black');
-        grid.addColorStop(1, 'white');
+        grid.addColorStop(this.colorStop , "rgba(0,0,0,1)");
+        grid.addColorStop(this.colorStop, "rgba(255, 255, 255, 0.0)");
         ctx.fillStyle = grid ;
         ctx.fillRect(this.x, this.y , this.width, this.height);
 
@@ -37,7 +32,7 @@ class FadeRect{
         if(this.isActive){
             this.draw();
         }else {
-            ctx.fillStyle = 'white';
+            ctx.fillStyle = "rgba(255, 255, 255, 0.0)"
             ctx.fillRect(this.x, this.y , this.width, this.height)
         }
     }
@@ -46,6 +41,7 @@ class FadeRect{
 
 class FadeAnimation {
     constructor(canvas, ctx,  col_number , row_number, fade_time , start_to_fade_time ){
+        this.active = true;
         this.ctx = ctx;
         this.col_number = col_number ;
         this.row_number = row_number;
@@ -53,8 +49,8 @@ class FadeAnimation {
         this.start_y =0;
         this.ww =canvas.width;
         this.wh = canvas.height;;
-        this.rect_width = (canvas.width/col_number )
-        this.rect_height =(canvas.height/row_number);
+        this.rect_width = Math.ceil(canvas.width/col_number );
+        this.rect_height =Math.ceil(canvas.height/row_number);
         this.rectArray = [];
         this.fade_time= fade_time;
         this.start_to_fade_time =start_to_fade_time;
@@ -74,38 +70,28 @@ class FadeAnimation {
                     this.fade_time ))
             }
         }
-        console.log(this.rectArray)
         this.rectArray.forEach(rect=>{
             rect.startCount();
         })
-        this.drawText();
     }
     animate(){
+        if(!this.active)
+            return;
         for(let i=0;i<this.rectArray.length;++i){
             this.rectArray[i].update();
         }
-        this.drawText();
-        requestAnimationFrame(this.animate);
     }
     end(){
-        
+        let count=0;
+        for(let rect of this.rectArray){
+            if(rect.colorStop ===1)
+                count++;
+        }
+        if(count === this.rectArray.length && this.rectArray.length !==0)
+            return true; 
+        return false;
     }
-
-    drawText(){
-        ctx.font = '160px serif';
-        ctx.textAlign = 'center';
-        ctx.fillStyle ='black';
-        ctx.fillText("NCKU CSIE", this.ww/2, this.wh/2);
+    destroy(){
+        this.active = false;
     }
-
 }
-
-const canvas = document.getElementById('canvas');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const ctx = canvas.getContext('2d');
-
-
-let animate = new FadeAnimation(canvas, ctx ,10, 10, 0.08, 0.2);
-animate.init();
-requestAnimationFrame(animate.animate)
